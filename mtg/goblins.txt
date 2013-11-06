@@ -6,7 +6,7 @@
 4 goblin arsonist
 2 krenko mob boss
 1 furyborn hellkite
-2 bettleback chief
+2 beettleback chief
 4 dragon hatchling
 
 //spells
