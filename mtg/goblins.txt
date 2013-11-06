@@ -1,0 +1,17 @@
+//land
+20 m
+
+//creatures
+4 goblin bushwhaker
+4 goblin arsonist
+2 krenko mob boss
+1 furyborn hellkite
+2 bettleback chief
+4 dragon hatchling
+
+//spells
+4 goblin grenade
+4 dragon fodder
+4 krenkos command
+3 fling
+2 seismic strike
