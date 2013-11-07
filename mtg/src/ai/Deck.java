@@ -22,16 +22,20 @@ public class Deck {
 	InputStream in;  //input stream
 	
 	ArrayList<Object> deck;
-	Scanner scan = new Scanner(in);  //TODO: not working 
+	Scanner scan;  //TODO: not working 
 	
 	//constructor
 	public Deck(String deck){
 		in = getFileInputStream(deck);
+		scan = new Scanner(in);
+		String next;
 		while(scan.hasNext()){
-			System.out.println(scan.next().toString());
-			
+			next = scan.next();
+			System.out.println(next);
+			if(next.startsWith("/")){
+				System.out.println("found a comment");
+				continue;
+			}
 		}
-	}
-
-	
+	}	
 }
