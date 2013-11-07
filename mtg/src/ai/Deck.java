@@ -77,7 +77,15 @@ public class Deck {
 	
 	//toString override
 	public String toString(){
-		return deck.toString();
+		StringBuilder sb = new StringBuilder();
+		String adder;
+		for(int i = 0 ; i < deck.size() ; i++){
+			sb.append("\n");
+			adder = (deck.get(i).toString());
+			sb.append(adder);
+		}
+		String s = sb.toString();
+		return s;
 		
 	}
 }

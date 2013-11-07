@@ -22,4 +22,8 @@ public class mountain {
 	void upkeep(){
 		mana=count;
 	}
+	
+	public String toString(){
+		return "Mountain";
+	}
 }
