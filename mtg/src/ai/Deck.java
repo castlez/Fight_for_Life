@@ -18,11 +18,23 @@ public class Deck {
 		return is;
 	}
 	
+	//checks if given string is a number
+	public Boolean isNum(String str){
+		try{
+			@SuppressWarnings("unused")
+			Integer i = Integer.parseInt(str);
+		}
+		catch (NumberFormatException e){
+			return false;
+		}
+		return true;
+	}
+	
+	
 	//vars
 	InputStream in;  //input stream
-	
-	ArrayList<Object> deck;
-	Scanner scan;  //TODO: not working 
+	public ArrayList<Object> deck;  //deck array list
+	Scanner scan; 
 	
 	//constructor
 	public Deck(String deckType){
@@ -32,16 +44,15 @@ public class Deck {
 		deck = new ArrayList<Object>();
 		
 		String next;
-		Integer count;
+		Integer count=1;
 		
 		while(scan.hasNext()){
 			next = scan.next();
 			System.out.println(next);
-			count = 1;
 			if(next.startsWith("/")){
 				continue;
 			}
-			else if (next.matches("\\d+")){
+			else if (isNum(next)){
 				count = Integer.parseInt(next);
 			}	
 			else{
@@ -52,6 +63,7 @@ public class Deck {
 		}
 	}	
 	
+	//adds a single card of class type passed to deck
 	public void addCard(String card){
 		@SuppressWarnings("rawtypes")
 		Class toAdd;
@@ -63,6 +75,7 @@ public class Deck {
 		}
 	}
 	
+	//toString override
 	public String toString(){
 		return deck.toString();
 		
