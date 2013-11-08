@@ -1,16 +1,12 @@
 package goblins;
 
-public class seismic_strike {
-	
-	int cmc;
+public class seismic_strike extends Spell {
 	
 	public seismic_strike(){
-		cmc=3;
+		super(3, "instant", true);
 	}
 	
 	public String toString(){
 		return "Seismic Strike";
 	}
-	
-	
 }

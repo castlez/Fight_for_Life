@@ -1,21 +1,14 @@
 package goblins;
 import java.util.*;
 
-public class beetleback_chief {
+public class beetleback_chief extends Creature {
 	
-	int cmc,red,power,toughness; //integer values of card
-	Boolean tapped;
+	int red; //integer values of card
 	goblin_token t1,t2;
-	String type,supertype;
 	
 	public beetleback_chief(){
-		cmc=4;
+		super(2, 2, 4, "creature", "goblin");
 		red = 2;
-		power=2;
-		toughness=2;
-		tapped = false;
-		type = "goblin";
-		supertype = "creature";
 		t1 = new goblin_token();
 		t2 = new goblin_token();
 	}
@@ -33,6 +26,9 @@ public class beetleback_chief {
 	
 	public void attack(){
 		tapped = true;
-		
+	}
+	
+	public void upkeep(){
+		tapped = false;
 	}
 }

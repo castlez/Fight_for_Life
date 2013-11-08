@@ -1,7 +1,39 @@
 package goblins;
 
-public class goblin_arsonist {
-	public String toString(){
-		return "success";
+import java.util.ArrayList;
+
+public class goblin_arsonist extends Creature {
+
+	int power,toughness,cmc,red; //red = amount of red mana needed to play
+	String supertype,type;
+	Boolean tapped; 
+	
+	public goblin_arsonist() {
+		super(1, 1, 1, "creature", "goblin");
+		red=1;
 	}
+
+	@Override
+	public void upkeep() {
+		tapped = false;
+
+	}
+
+	@Override
+	public void attack() {
+		tapped = true;
+
+	}
+
+	@Override
+	public void play(ArrayList<Object> dest) {
+		dest.add(this);
+
+	}
+
+	@Override
+	public String toString() {
+		return "Goblin Arsonist";
+	}
+
 }
