@@ -48,27 +48,39 @@ public class Deck {
 		
 		while(scan.hasNext()){
 			next = scan.next();
+			
+			//ignore comments
 			if(next.startsWith("/")){
 				continue;
 			}
+			//if it is a number save that number to add the next card
 			else if (isNum(next)){
 				count = Integer.parseInt(next);
+				continue;
 			}	
+			//add a number of 'next' cards equal to 'count'
 			else{
 				for(int i = 0; i<count;i++){
-					addCard(next);
+					try {
+						addCard(next);
+					} catch (InstantiationException | IllegalAccessException e) {
+						e.printStackTrace();
+					}
 				}
 			}
 		}
 	}	
 	
+	
 	//adds a single card of class type passed to deck
-	public void addCard(String card){
-		Class<?> toAdd;
+	public void addCard(String card) throws InstantiationException, IllegalAccessException{
+		Object toAdd;
+		//tries to add a card of type 'card'
 		try {
-			toAdd = Class.forName("goblins." + card);
+			toAdd = Class.forName("goblins." + card).newInstance();
 			deck.add(toAdd);
-		} catch (ClassNotFoundException e) {
+		} 
+		catch (ClassNotFoundException e){
 			e.printStackTrace();
 		}
 	}
@@ -77,10 +89,9 @@ public class Deck {
 	public String toString(){
 		StringBuilder sb = new StringBuilder(); //string builder to format deck
 		String adder;  //string of class to be added
-		Object buff;  //buffer for class to be added
 		
+		//add new line, then the card's toString
 		for(int i = 0 ; i < deck.size() ; i++){
-			buff = deck.get(i);
 			sb.append("\n");
 			adder = (deck.get(i).toString());
 			sb.append(adder);

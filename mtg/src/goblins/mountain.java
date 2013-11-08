@@ -4,7 +4,7 @@ public class mountain {
 	int count;
 	int mana;
 	
-	mountain(){
+	public mountain(){
 		mana = 1;
 		count = 1;
 	}
