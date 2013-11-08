@@ -99,4 +99,12 @@ public class Deck {
 		String s = sb.toString();
 		return s;
 	}
+
+
+	public void shuffle(){
+		Collections.shuffle(deck);
+	}
+
 }
+
+	

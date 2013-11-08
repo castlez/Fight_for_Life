@@ -2,14 +2,26 @@ package ai;
 
 public class Player {
 	
-	Deck d;
-	Field f;
-	Hand h;
+	Deck deck;
+	Field field;
+	Hand hand;
+	int life;
 	
+	//constructor
 	public Player(){
-		d = new Deck("goblins.txt");
-		f = new Field();
-		h = new Hand();
+		deck = new Deck("goblins.txt");
+		field = new Field();
+		hand = new Hand();
+		life = 20;
+	}
+	
+	//shows contents of deck
+	public String showDeck(){
+		return deck.toString();
+	}
+	
+	public void shuffle(){
+		deck.shuffle();
 	}
 	
 }

@@ -4,6 +4,7 @@ import java.util.*;
 public class beetleback_chief {
 	
 	int cmc,red,power,toughness; //integer values of card
+	Boolean tapped;
 	goblin_token t1,t2;
 	String type,supertype;
 	
@@ -12,6 +13,7 @@ public class beetleback_chief {
 		red = 2;
 		power=2;
 		toughness=2;
+		tapped = false;
 		type = "goblin";
 		supertype = "creature";
 		t1 = new goblin_token();
@@ -30,6 +32,7 @@ public class beetleback_chief {
 	}
 	
 	public void attack(){
+		tapped = true;
 		
 	}
 }
