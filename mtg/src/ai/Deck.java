@@ -48,7 +48,6 @@ public class Deck {
 		
 		while(scan.hasNext()){
 			next = scan.next();
-			System.out.println(next);
 			if(next.startsWith("/")){
 				continue;
 			}
@@ -65,10 +64,9 @@ public class Deck {
 	
 	//adds a single card of class type passed to deck
 	public void addCard(String card){
-		@SuppressWarnings("rawtypes")
-		Class toAdd;
+		Class<?> toAdd;
 		try {
-			toAdd = Class.forName("goblins." + card); //make generic when it works
+			toAdd = Class.forName("goblins." + card);
 			deck.add(toAdd);
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
@@ -77,15 +75,17 @@ public class Deck {
 	
 	//toString override
 	public String toString(){
-		StringBuilder sb = new StringBuilder();
-		String adder;
+		StringBuilder sb = new StringBuilder(); //string builder to format deck
+		String adder;  //string of class to be added
+		Object buff;  //buffer for class to be added
+		
 		for(int i = 0 ; i < deck.size() ; i++){
+			buff = deck.get(i);
 			sb.append("\n");
 			adder = (deck.get(i).toString());
 			sb.append(adder);
 		}
 		String s = sb.toString();
 		return s;
-		
 	}
 }

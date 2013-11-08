@@ -5,4 +5,7 @@ public class goblin_bushwhacker {
 	int toughness = 1;
 	String cmc = "r";
 	
+	public String toString(){
+		return "success";
+	}
 }
