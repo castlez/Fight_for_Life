@@ -1,26 +1,22 @@
 package goblins;
+import java.util.*;
 
-public class mountain {
-	int count;
-	int mana;
+public class mountain extends Land {
 	
 	public mountain(){
-		mana = 1;
-		count = 1;
+		super("red");
 	}
 	
-	Boolean tap(int num){
-		if(num<=mana){
-			mana-=num;
-			return true;
-		}
-		else{
-			return false;
-		}
+	public void tap(){
+		tapped = true;
 	}
 	
-	void upkeep(){
-		mana=count;
+	public void play(ArrayList<Card> dest){
+		dest.add(this);
+	}
+	
+	public void upkeep(){
+		tapped = false;
 	}
 	
 	public String toString(){

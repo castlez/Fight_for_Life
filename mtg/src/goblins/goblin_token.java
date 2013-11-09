@@ -1,16 +1,10 @@
 package goblins;
+import java.util.*;
 
-public class goblin_token {
-	int power,toughness; 
-	String supertype,type;
-	Boolean tapped; 
-	
+public class goblin_token extends Creature {
+
 	public goblin_token(){
-		power=1;
-		toughness=1;
-		supertype = "creature";
-		type = "goblin";
-		tapped = false;
+		super(1, 1, 0, "creature", "goblin");
 	}
 	
 
@@ -18,7 +12,13 @@ public class goblin_token {
 		tapped = false;
 
 	}
+	
+	public void end(){
+		power = 1;
+		toughness = 1;
+	}
 
+	public void play(ArrayList<Card> dest){} //you don't 'Play' tokens
 
 	public void attack() {
 		tapped = true;

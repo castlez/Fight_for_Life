@@ -24,9 +24,8 @@ public class dragon_hatchling extends Creature {
 	}
 
 	@Override
-	public void play(ArrayList<Object> dest) {
+	public void play(ArrayList<Card> dest) {
 		dest.add(this);
-
 	}
 
 	@Override

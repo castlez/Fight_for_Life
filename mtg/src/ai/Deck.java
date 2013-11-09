@@ -1,6 +1,7 @@
 package ai;
 import java.io.*;
 import java.util.*;
+import goblins.*;
 
 public class Deck {
 	//grabs the file given and provides an input stream
@@ -33,7 +34,7 @@ public class Deck {
 	
 	//vars
 	InputStream in;  //input stream
-	public ArrayList<Object> deck;  //deck array list
+	public ArrayList<Card> deck;  //deck array list
 	Scanner scan; 
 	
 	//constructor
@@ -41,7 +42,7 @@ public class Deck {
 		in = getFileInputStream(deckType);
 		scan = new Scanner(in);
 		
-		deck = new ArrayList<Object>();
+		deck = new ArrayList<>();
 		
 		String next;
 		Integer count=1;
@@ -78,7 +79,8 @@ public class Deck {
 		//tries to add a card of type 'card'
 		try {
 			toAdd = Class.forName("goblins." + card).newInstance();
-			deck.add(toAdd);
+			Card c = (Card) toAdd;
+			deck.add(c);
 		} 
 		catch (ClassNotFoundException e){
 			e.printStackTrace();

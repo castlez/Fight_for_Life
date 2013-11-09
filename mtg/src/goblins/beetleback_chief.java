@@ -18,7 +18,8 @@ public class beetleback_chief extends Creature {
 		return "BeetleBack Chief";
 	}
 	
-	public void play(ArrayList<Object> c){
+
+	public void play(ArrayList<Card> c){
 		c.add(this);
 		c.add(t1);
 		c.add(t2);
@@ -30,5 +31,10 @@ public class beetleback_chief extends Creature {
 	
 	public void upkeep(){
 		tapped = false;
+	}
+	
+	public void end(){
+		power = 2;
+		toughness = 2;
 	}
 }

@@ -18,7 +18,8 @@ public abstract class Creature extends Spell {
 	
 	public abstract void upkeep();
 	public abstract void attack();
-	public abstract void play(ArrayList<Object> dest);
+	public abstract void play(ArrayList<Card> dest);
+	public abstract void end();
 	public abstract String toString();
 	
 }
