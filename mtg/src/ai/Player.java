@@ -7,7 +7,7 @@ public class Player {
 	Deck deck;
 	Field field;
 	ArrayList<Card> hand;
-	int life;
+	public int life;
 	Boolean playedLand;
 	Creature c; //Creature place holder for searching hand, field etc
 	
@@ -52,6 +52,12 @@ public class Player {
 		System.out.println(hand.toString());
 	}
 	
+	public void showField(){
+		System.out.println("My creatures\n" + field.creatures.toString());
+		System.out.println("My lands\n" + field.mana.toString());
+		System.out.println("My graveyard (ignore the tombstone)\n" + field.grave.toString());
+	}
+	
 	//takes a turn
 	public void takeTurn(){
 		
@@ -67,8 +73,10 @@ public class Player {
 			for(int i = 0 ; i < hand.size() ; i++){
 				if(hand.get(i).toString()=="Mountain"){
 					mountain m = (mountain) hand.get(i);
+					System.out.println("I play a mountain.");
 					field.mana.add(m);
 					hand.remove(i);
+					break;
 				}
 			}
 		}
@@ -78,7 +86,12 @@ public class Player {
 			if(hand.get(i).supertype=="creature"){  //if you have a creature
 				c = (Creature) hand.get(i); //make that card look like a Creature
 				if(c.cmc <= field.availableMana()){  //if you have enough mana
-					c.play(field.creatures);
+					for(int j = 0 ; j < c.cmc ; j++){ //tap the proper amount of lands
+						field.mana.get(j).tap();
+					}
+					System.out.printf("I tap %d lands to play %s!\n", c.cmc, c.toString());
+					c.play(field.creatures); //play the creature
+					hand.remove(i);
 				}
 			}
 		}
@@ -92,5 +105,6 @@ public class Player {
 			c = (Creature) field.creatures.get(i);
 			c.end();
 		}
+		System.out.println("...and I end my turn.");
 	}
 }
