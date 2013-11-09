@@ -26,7 +26,9 @@ public class CLI {
 		
 		do{
 			System.out.print("Whose going first?(c = computer, m = me) > ");
-			ans = sc.nextLine();
+			if(sc.hasNext()){
+				ans = sc.nextLine();
+			}
 			System.out.printf("Your choice was '%s'\n", ans);
 			
 			if(ans.equals("c")){
@@ -45,14 +47,18 @@ public class CLI {
 			//players turn
 			do{
 				System.out.print("Your turn!(type 'h' for list of commands) > ");
-				ans = sc.nextLine();
+				if(sc.hasNext()){
+					ans = sc.nextLine();
+				}
 				switch(ans){
 				
 				//deal damage to comp
 				case "d":
 					System.out.print("Uh oh... How much?(enter amount in number form) > ");
 					while(true){
-						ans = sc.nextLine();
+						if(sc.hasNext()){
+							ans = sc.nextLine();
+						}
 						if(isNum(ans)){
 							amnt = Integer.parseInt(ans);
 							break;
@@ -68,6 +74,39 @@ public class CLI {
 				
 				//attack comp
 				case "a":
+					System.out.print("Bring it! How many attackers? (enter a number) >");
+					if(sc.hasNext()){
+						ans = sc.nextLine();
+					}
+					Boolean blocked = false;
+					if(isNum(ans)){
+						amnt = Integer.parseInt(ans);
+						blocked = op.block(amnt);
+					}
+					else{
+						System.out.println("You must enter a number of attackers!");
+					}
+					
+					if(!blocked){
+						System.out.print("How much damage did you do? (enter a number) > ");
+						if(sc.hasNext()){
+							ans = sc.nextLine();
+						}
+						if(isNum(ans)){
+							amnt = Integer.parseInt(ans);
+							op.life -= amnt;
+							System.out.printf("You hit me for %d, bring my life total to %d!", amnt, op.life);
+						}
+					}
+					break;
+					
+				case "k":
+					System.out.print("Destroy what? (type the name) > ");
+					if(sc.hasNext()){
+						ans = sc.nextLine();
+					}
+					op.kill(ans);
+					break;
 					
 				//look at comp's hand
 				case "s":
@@ -85,14 +124,29 @@ public class CLI {
 					System.out.println(" e = end turn,\n "
 							+ "d = deal damage to me,\n "
 							+ "a = attack me,\n "
+							+ "k = destroy one of my permanents"
 							+ "s = see my hand,\n "
 							+ "f = see my field,\n"
 							+ "q = quit game");
 					break;
 					
-			    //quit game
+			    //quit game 
 				case "q":
 					break;
+					
+				case "e":
+					break;
+					
+				default:
+					Scanner s = new Scanner(System.in);
+					String answer;
+					while(true){
+						System.out.println("TRAPPED");
+						if(s.hasNext()){
+							answer = s.nextLine();
+						}
+					}
+					
 					
 				
 				}

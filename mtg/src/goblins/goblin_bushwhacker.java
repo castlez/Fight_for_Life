@@ -38,7 +38,7 @@ public class goblin_bushwhacker extends Creature {
 		//their power by one, removes the old from 
 		//battle field, and replaces with new one.
 		//TODO: will not work if you play multiple bushwhackers in one turn
-		if(!dest.contains("tombstone")){ //kicks as long as it isnt played to the graveyard
+		if(dest.get(0).toString().toLowerCase()!="tombstone"){ //kicks as long as it isnt played to the graveyard
 			for(int i = 0 ; i < dest.size() ; i++){
 				c = (Creature) dest.get(i);
 				c.power++;

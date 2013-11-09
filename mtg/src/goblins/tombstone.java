@@ -11,5 +11,9 @@ public class tombstone extends Card {
 	public tombstone(){
 		super("tombstone");
 	}
+	
+	public String toString(){
+		return "";
+	}
 
 }
