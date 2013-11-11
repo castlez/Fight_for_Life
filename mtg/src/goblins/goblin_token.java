@@ -23,9 +23,9 @@ public class goblin_token extends Creature {
 
 	public void play(ArrayList<Card> dest){} //you don't 'Play' tokens
 
-	public void attack() {
+	public int attack(){
 		tapped = true;
-
+		return power;
 	}
 	
 	public String toString(){

@@ -6,7 +6,7 @@ import goblins.*;
 public class Field {
 	
 	ArrayList<goblins.Card> creatures;
-	ArrayList<goblins.Land> mana;
+	ArrayList<goblins.Card> mana;
 	ArrayList<goblins.Card> grave;
 
 	public Field(){
@@ -24,15 +24,19 @@ public class Field {
 			c.upkeep();
 		}
 		
+		Land l;
 		for(int i = 0;i<mana.size();i++){
-			mana.get(i).upkeep();
+			l = (Land) mana.get(i);
+			l.upkeep();
 		}
 	}
 	
 	public int availableMana(){
 		int amnt = 0;
+		Land l;
 		for(int i = 0 ; i < mana.size() ; i++){
-			if(!mana.get(i).tapped){
+			l = (Land) mana.get(i);
+			if(!l.tapped){
 				amnt++;
 			}
 		}

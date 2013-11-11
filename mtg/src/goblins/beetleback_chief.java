@@ -25,8 +25,9 @@ public class beetleback_chief extends Creature {
 		c.add(t2);
 	}
 	
-	public void attack(){
+	public int attack(){
 		tapped = true;
+		return power;
 	}
 	
 	public void upkeep(){

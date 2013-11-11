@@ -20,8 +20,9 @@ public class goblin_arsonist extends Creature {
 	}
 
 	@Override
-	public void attack() {
+	public int attack(){
 		tapped = true;
+		return power;
 	}
 
 	@Override

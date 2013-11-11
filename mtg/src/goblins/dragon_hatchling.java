@@ -18,9 +18,9 @@ public class dragon_hatchling extends Creature {
 	}
 
 	@Override
-	public void attack() {
+	public int attack(){
 		tapped = true;
-
+		return power;
 	}
 
 	@Override

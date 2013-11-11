@@ -37,8 +37,9 @@ public class furyborn_hellkite extends Creature {
 	}
 
 	@Override
-	public void attack() {
+	public int attack(){
 		tapped = true;
+		return power;
 	}
 
 	@Override
@@ -55,12 +56,14 @@ public class furyborn_hellkite extends Creature {
 			e.printStackTrace();
 		}
 		
-		while(!ans.toLowerCase().equals("y") || !ans.toLowerCase().equals("n")){
+		while(true){
 			if(ans.toLowerCase().equals("y")){
 				this.thirsty = true;
+				break;
 			}
 			else if(ans.toLowerCase().equals("n")){
 				this.thirsty = false;
+				break;
 			}
 			else{
 				System.out.println("Please answer 'y' or 'n', did you take damage this turn?");
@@ -70,6 +73,7 @@ public class furyborn_hellkite extends Creature {
 					System.out.println("ERROR: " + e.getMessage());
 					e.printStackTrace();
 				}
+				continue;
 			}
 		}
 	}

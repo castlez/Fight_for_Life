@@ -20,9 +20,9 @@ public class krenko_mob_boss extends Creature {
 	}
 
 	@Override
-	public void attack() {
+	public int attack(){
 		tapped = true;
-
+		return power;
 	}
 
 	@Override

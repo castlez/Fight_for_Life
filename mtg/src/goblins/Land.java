@@ -12,7 +12,7 @@ public abstract class Land extends Card {
 	}
 	
 	public Land(String color){
-		super("Land");
+		super("land");
 		this.color = color;
 		this.tapped = false;
 	}

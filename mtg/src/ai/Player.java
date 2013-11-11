@@ -195,8 +195,10 @@ public class Player {
 			if(hand.get(i).supertype=="creature"){  //if you have a creature
 				c = (Creature) hand.get(i); //make that card look like a Creature
 				if(c.cmc <= field.availableMana()){  //if you have enough mana
+					Land l;
 					for(int j = 0 ; j < c.cmc ; j++){ //tap the proper amount of lands
-						field.mana.get(j).tap();
+						l = (Land) field.mana.get(i);
+						l.tap();
 					}
 					System.out.printf("I tap %d land(s) to play %s!\n", c.cmc, c.toString());
 					c.play(field.creatures); //play the creature
@@ -206,6 +208,7 @@ public class Player {
 		}
 		
 		//TODO: combat
+		
 		
 		//TODO: main phase 2
 		
@@ -226,23 +229,41 @@ public class Player {
 	
 	public void playFromDeck(String toPlay){
 		Object toAdd;
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		String answer = "s"; //answer taken from scanner
 		
+		System.out.printf("Searching for card |%s|", toPlay);
 		//tries to add a card of type 'toPlay'
 		try {
-			toAdd = Class.forName("goblins." + toPlay.toLowerCase()).newInstance();
+			toAdd = Class.forName("goblins." + toPlay).newInstance();
 			Card c = (Card) toAdd;
-			int i = deck.deck.indexOf(c);
+			int i = deck.deck.toString().toLowerCase().indexOf(c.toString().toLowerCase());
 			if(i>=0){
 				System.out.printf("found card: %s\n", c.toString());
 				
-				if(c.supertype.equals("creature")){
-					c.play(field.creatures);
-					deck.deck.remove(i);
+				//ask where to play the card
+				System.out.print("Does this spell need to know about lands (l), creatures(c) or graveyard(g)? > ");
+				try {
+					answer = br.readLine();
+				} catch (IOException e) {
+					System.out.println("ERROR: " + e.getMessage());
+					e.printStackTrace();
 				}
-				else if(c.supertype.equals("land")){
-					Land l = (Land) c;
-					field.mana.add(l);
-					deck.deck.remove(i);
+				switch(answer){
+					case "l":
+						Land l = (Land) c;
+						l.play(field.mana);
+						break;
+					case "c":
+						Creature t = (Creature) c;
+						t.play(field.creatures);
+						break;
+					case "g":
+						c.play(field.grave);
+						break;
+					default:
+						System.out.println("No such location.");
+			
 				}
 			}
 			else{

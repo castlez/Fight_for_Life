@@ -55,7 +55,7 @@ public class CLI {
 		
 		
 		//game loop begin
-		while(op.life>=0){
+		while(op.life>0){
 			//players turn
 			do{
 				
