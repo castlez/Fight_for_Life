@@ -108,21 +108,21 @@ public class CLI {
 						amnt = Integer.parseInt(ans);
 						blocked = op.block(amnt);
 						if(!blocked){
-							System.out.print("How much damage did you do? (enter a number) > ");
-							try {
-								ans = read.readLine();
-							} catch (IOException e) {
-								System.out.println("ERROR: " + e.getMessage());
-								e.printStackTrace();
-							}
-							
-							if(isNum(ans)){
-								amnt = Integer.parseInt(ans);
-								op.life -= amnt;
-								System.out.printf("\nYou hit me for %d, bring my life total to %d!\n", amnt, op.life);
-								break;
-							}
+							do{
+								System.out.print("How much damage did you do? (enter a number) > ");
+								try {
+									ans = read.readLine();
+								} catch (IOException e) {
+									System.out.println("ERROR: " + e.getMessage());
+									e.printStackTrace();
+								}
+							}while(!isNum(ans));
+							amnt = Integer.parseInt(ans);
+							op.life -= amnt;
+							System.out.printf("\nYou hit me for %d, bring my life total to %d!\n", amnt, op.life);
+							break;
 						}
+							
 						else{
 							System.out.println("\nHaha! I blocked all your creatures!");
 							break;
@@ -193,6 +193,18 @@ public class CLI {
 						e.printStackTrace();
 					}
 					op.playFromDeck(ans);
+					break;
+					
+				//CHEAT grab card from deck
+				case "tohand":
+					System.out.print("CHEATER\nwhat to grab from deck? > ");
+					try {
+						ans = read.readLine();
+					} catch (IOException e) {
+						System.out.println("ERROR: " + e.getMessage());
+						e.printStackTrace();
+					}
+					op.addToHand(ans);
 					break;
 					
 				//default 	

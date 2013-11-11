@@ -10,6 +10,8 @@ public class goblin_bushwhacker extends Creature {
 	
 	public goblin_bushwhacker() {
 		super(1, 1, 2, "creature", "goblin");
+		power = 1;
+		toughness = 1;
 		red=2;
 		
 		//NOTE: actual cmc is 1. actual red is 1 but to
@@ -32,21 +34,32 @@ public class goblin_bushwhacker extends Creature {
 	@Override
 	public void play(ArrayList<Card> dest) {
 		dest.add(this);
+		ArrayList<Creature> buffer = new ArrayList<>(); //buffer zone of creatures being pumped by kick ability
 		Creature c;
 		
 		//creates a copy of each creature, increments
 		//their power by one, removes the old from 
 		//battle field, and replaces with new one.
 		//TODO: will not work if you play multiple bushwhackers in one turn
-		if(!dest.get(0).toString().equals("")){ //kicks as long as it isn't played to the graveyard
-			for(int i = 0 ; i < dest.size() ; i++){
-				c = (Creature) dest.get(i);
-				c.power++;
-				c.sick=false; //gives them haste
-				dest.remove(i);
-				dest.add(c);
+		if(!dest.get(0).toString().equals("")){ //kicks as long as it isn't played to the graveyard and creatures>1
+			if(dest.size()>1){
+				for(int i = 0 ; i < dest.size() ; i++){
+					c = (Creature) dest.get(i);
+					buffer.add(c);
+				}
+				for(int i = 0 ; i < buffer.size() ; i++){
+					buffer.get(i).power++;
+					buffer.get(i).sick=false; //gives them haste
+				}
 				
+				dest.clear();
+				dest.addAll(buffer);
 			}
+			
+			//super.power++;
+			//super.sick=false;
+			
+			
 		}
 		else{
 			dest.add(this);
@@ -59,10 +72,10 @@ public class goblin_bushwhacker extends Creature {
 	}
 	
 	public void end(){
-		power = 1;
-		toughness = 1;
-		if(sick){
-			sick = false;
+		super.power = 1;
+		super.toughness = 1;
+		if(super.sick){
+			super.sick = false;
 		}
 	}
 

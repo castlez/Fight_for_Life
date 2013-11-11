@@ -24,15 +24,15 @@ public class furyborn_hellkite extends Creature {
 	
 	public void end(){
 		if(thirsty){
-			power = 12;
-			toughness = 12;
+			super.power = 12;
+			super.toughness = 12;
 		}
 		else{
-			power = 6;
-			toughness = 6;
+			super.power = 6;
+			super.toughness = 6;
 		}
 		if(sick){
-			sick = false;
+			super.sick = false;
 		}
 	}
 

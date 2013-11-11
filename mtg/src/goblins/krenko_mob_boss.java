@@ -37,10 +37,10 @@ public class krenko_mob_boss extends Creature {
 	}
 	
 	public void end(){
-		power = 3;
-		toughness = 3;
-		if(sick){
-			sick = false;
+		super.power = 3;
+		super.toughness = 3;
+		if(super.sick){
+			super.sick = false;
 		}
 	}
 	

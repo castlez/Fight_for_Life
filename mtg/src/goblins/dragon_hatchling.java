@@ -35,13 +35,13 @@ public class dragon_hatchling extends Creature {
 	
 	//pumpping with red mana 'amt' times
 	public void pump(int amt){
-		power = amt;
+		power += amt;
 	}
 	public void end(){
-		power = 0;
-		toughness = 1;
-		if(sick){
-			sick = false;
+		super.power = 0;
+		super.toughness = 1;
+		if(super.sick){
+			super.sick = false;
 		}
 	}
 }

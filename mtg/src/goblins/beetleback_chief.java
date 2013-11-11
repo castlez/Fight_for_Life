@@ -35,10 +35,10 @@ public class beetleback_chief extends Creature {
 	}
 	
 	public void end(){
-		power = 2;
-		toughness = 2;
-		if(sick){
-			sick = false;
+		super.power = 2;
+		super.toughness = 2;
+		if(super.sick){
+			super.sick = false;
 		}
 	}
 }

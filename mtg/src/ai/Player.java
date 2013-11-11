@@ -160,6 +160,71 @@ public class Player {
 		
 	}
 	
+	public int attack(){
+		ArrayList<Creature> attackers = new ArrayList<>();; //array of attackers
+		Creature c;
+		int totalDamage=0;
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		String answer = "s"; //answer taken from scanner
+		
+		//check available attackers TODO: add strategy to what attacks
+		for(int i = 0; i<field.creatures.size();i++){
+			c = (Creature) field.creatures.get(i);
+			if(!c.tapped && !c.sick && !c.toString().equals("Krenko, Mob Boss")){
+				attackers.add(c);
+			}
+		}
+		System.out.printf("I will be attacking with:\n");
+		for(int i = 0 ; i < attackers.size() ; i++){
+			c = attackers.get(i);
+			if(i != 0){
+				System.out.printf(", %s (%d/%d)", c.toString(), c.power, c.toughness);
+			}
+			else{
+				System.out.printf("%s (%d/%d)", c.toString(), c.power, c.toughness);
+			}
+		}
+		//TODO: add option of reacting to declared attackers
+		
+		for(int i = 0 ; i < attackers.size() ; i++){
+			c = attackers.get(i);
+			
+			//TODO: hard-coding! MUST FIX
+			if(c.toString().equals("Dragon Hatchling")){
+				int amnt = field.availableMana();
+				dragon_hatchling d = (dragon_hatchling) c;
+				d.pump(amnt);
+			}
+			
+			System.out.printf("%s is attacking as a %d/%d, do you block? (y or n) > ", c.toString(), c.power, c.toughness );
+			try {
+				answer = br.readLine();
+			} catch (IOException e) {
+				System.out.println("ERROR: " + e.getMessage());
+				e.printStackTrace();
+			}
+			if(answer.equals("y")){
+				System.out.printf("\nDoes my %s die? (y or n) > ", c.toString());
+				try {
+					answer = br.readLine();
+				} catch (IOException e) {
+					System.out.println("ERROR: " + e.getMessage());
+					e.printStackTrace();
+				}
+				if(answer.equals("y")){
+					field.creatures.remove(c);
+					attackers.remove(c);
+					c.play(field.grave);
+				}
+			}
+			else{
+				totalDamage+=c.power;
+			}
+			
+		}
+		return totalDamage;
+	}
+	
 	//shows whole field
 	public void showField(){
 		System.out.println("My creatures\n" + field.creatures.toString());
@@ -169,6 +234,8 @@ public class Player {
 	
 	//takes a turn
 	public void takeTurn(){
+		
+		ArrayList<Card> myCreatures = field.creatures;
 		
 		/*upkeep*/
 		field.upkeep(); 
@@ -197,36 +264,54 @@ public class Player {
 				if(c.cmc <= field.availableMana()){  //if you have enough mana
 					Land l;
 					for(int j = 0 ; j < c.cmc ; j++){ //tap the proper amount of lands
-						l = (Land) field.mana.get(i);
+						l = (Land) field.mana.get(j);
 						l.tap();
 					}
 					System.out.printf("I tap %d land(s) to play %s!\n", c.cmc, c.toString());
-					c.play(field.creatures); //play the creature
+					c.play(myCreatures); //play the creature
 					hand.remove(i);
 				}
 			}
 		}
 		
-		//TODO: combat
-		
+		//combat
+		Boolean available = false; //true if at least one creature is available to attack
+		for(int i = 0 ; i < myCreatures.size() ; i++){
+			c = (Creature) myCreatures.get(i);
+			if(!c.tapped && !c.sick && !c.toString().equals("Krenko, Mob Boss")){
+				available = true;
+				break;
+			}
+		}
+		if(available){
+			int damage = attack();
+			System.out.printf("After the dust settles I deal %d damage to you!\n", damage);
+		}
 		
 		//TODO: main phase 2
 		
 		//TODO: end step
-		for(int i = 0; i <field.creatures.size() ; i++){
-			c = (Creature) field.creatures.get(i);
+		ArrayList<Creature> buff = new ArrayList<>();
+		for(int i = 0; i <myCreatures.size() ; i++){
+			c = (Creature) myCreatures.get(i);
 			
 			if(c.toString().equals("Krenko, Mob Boss")){
-				krenko_mob_boss k = (krenko_mob_boss) field.creatures.get(i);
-				k.effect(field.creatures);
+				krenko_mob_boss k = (krenko_mob_boss) myCreatures.get(i);
+				k.effect(myCreatures);
 			}
-			
-			c.end();
+			buff.add(c);
+		}
+		for(int i = 0 ; i < buff.size() ; i++){
+			buff.get(i).end();
 			
 		}
+		field.creatures.clear();
+		field.creatures.addAll(buff);
+		
 		System.out.println("...and I end my turn.");
 	}
 	
+	//CHEAT play target card straight from deck
 	public void playFromDeck(String toPlay){
 		Object toAdd;
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -274,5 +359,25 @@ public class Player {
 			System.out.println("Card not found.");
 		}
 		
+	}
+	
+	public void addToHand(String toAdd){
+		Object buff;
+		
+		System.out.printf("Searching for card |%s|", toAdd);
+		//tries to add a card of type 'toPlay'
+		try {
+			buff = Class.forName("goblins." + toAdd).newInstance();
+			Card c = (Card) buff;
+			int i = deck.deck.toString().toLowerCase().indexOf(c.toString().toLowerCase());
+			if(i>=0){
+				System.out.printf("Added to hand: %s\n", c.toString());
+				hand.add(c);
+		
+			}	
+		}
+		catch (ClassNotFoundException | InstantiationException | IllegalAccessException e){
+			System.out.println("Card not found.");
+		}
 	}
 }
