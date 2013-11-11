@@ -14,7 +14,7 @@ public class Field {
 		mana =  new ArrayList<>();
 		grave = new ArrayList<>();
 		tombstone tomb = new tombstone();
-		grave.add(tomb);
+		grave.add(0, tomb);
 	}
 	
 	public void upkeep(){

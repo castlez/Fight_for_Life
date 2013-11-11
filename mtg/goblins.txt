@@ -4,7 +4,7 @@
 //creatures
 4 goblin_bushwhacker
 4 goblin_arsonist
-2 krenko_mob_boss
+3 krenko_mob_boss
 1 furyborn_hellkite
 2 beetleback_chief
 4 dragon_hatchling

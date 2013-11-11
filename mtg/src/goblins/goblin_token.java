@@ -16,6 +16,9 @@ public class goblin_token extends Creature {
 	public void end(){
 		power = 1;
 		toughness = 1;
+		if(sick){
+			sick = false;
+		}
 	}
 
 	public void play(ArrayList<Card> dest){} //you don't 'Play' tokens

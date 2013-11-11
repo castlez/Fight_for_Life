@@ -40,6 +40,9 @@ public class goblin_arsonist extends Creature {
 	public void end(){
 		power = 1;
 		toughness = 1;
+		if(sick){
+			sick = false;
+		}
 	}
 
 }

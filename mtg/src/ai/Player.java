@@ -1,4 +1,5 @@
 package ai;
+import java.io.*;
 import java.util.*;
 
 import goblins.*;
@@ -14,7 +15,12 @@ public class Player {
 	
 	//constructor
 	public Player(){
+		try{
 		deck = new Deck("goblins.txt");
+		}
+		catch(NullPointerException e){
+			System.out.println("ERROR: couldn't find specified deck!");
+		}
 		field = new Field();
 		hand = new ArrayList<>();
 		life = 20;
@@ -100,8 +106,8 @@ public class Player {
 
 	public Boolean block(int attackers){
 		int gotthrough = attackers; //starts out equal to the m=number of attackers
-		Scanner scan = new Scanner(System.in); //scanner
-		String ans = "s"; //answer taken from scanner
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		String answer = "s"; //answer taken from scanner
 		ArrayList<goblins.Card> myCreatures = field.creatures; //alias of array of creatures
 		
 		//if i have creatures to block
@@ -109,38 +115,46 @@ public class Player {
 			//iterate through my creatures and assign blockers
 			Creature blocker;
 			for(int i = 0 ; i < myCreatures.size() ; i++){
+				System.out.println(myCreatures.toString());
 				blocker = (Creature) myCreatures.get(i); //cast index i into a creature
 				//see if the creature survives
-				System.out.printf("My %s blocks creature #%d, he is a %d/%d, does he survive? (y/n) > ", 
-						blocker.toString(), i+1, blocker.power, blocker.toughness );
+				System.out.printf("My %s blocks creature #%d (Prioritizing highest power),\n", blocker.toString(), i+1 );
+				System.out.printf("he is a %d/%d, does he survive? (y/n) > ",  blocker.power, blocker.toughness);
+				
 				gotthrough--; //either way the amount of creatures getting through is reduced TODO: factor for trample
-				ans = scan.nextLine();// check the result of survival
+				try {
+					answer = br.readLine();
+				} catch (IOException e) {
+					System.out.println("ERROR: " + e.getMessage());
+					e.printStackTrace();
+				}
+				
 				//echo results
-				if(ans.toLowerCase().equals("y")){
+				if(answer.toLowerCase().equals("y")){
 					System.out.println("\nW00t!");
 				}
 				//if the creature didn't survive, send it to graveyard
-				else if(ans.toLowerCase().equals("n")){
+				else if(answer.toLowerCase().equals("n")){
 					System.out.printf("\nOh no! you destroyed my %s!\n", blocker.toString());
 					myCreatures.remove(blocker);
 					blocker.play(field.grave);
 				}
 			}
 			
-			scan.close();
 			System.out.printf("I blocked a total of %d of your creatures (prioritizing ones with the most power\n).", attackers-gotthrough);
 			//return if and only if no attackers got through
 			if(gotthrough == 0){
+				
 				return true;
 			}
 			else{
+				
 				return false;
 			}
-			
 		}
 		else{
 			System.out.println("I have no creatures so I can't block!");
-			scan.close();
+			
 			return false;
 		}
 		
@@ -198,8 +212,46 @@ public class Player {
 		//TODO: end step
 		for(int i = 0; i <field.creatures.size() ; i++){
 			c = (Creature) field.creatures.get(i);
+			
+			if(c.toString().equals("Krenko, Mob Boss")){
+				krenko_mob_boss k = (krenko_mob_boss) field.creatures.get(i);
+				k.effect(field.creatures);
+			}
+			
 			c.end();
+			
 		}
 		System.out.println("...and I end my turn.");
+	}
+	
+	public void playFromDeck(String toPlay){
+		Object toAdd;
+		
+		//tries to add a card of type 'toPlay'
+		try {
+			toAdd = Class.forName("goblins." + toPlay.toLowerCase()).newInstance();
+			Card c = (Card) toAdd;
+			int i = deck.deck.indexOf(c);
+			if(i>=0){
+				System.out.printf("found card: %s\n", c.toString());
+				
+				if(c.supertype.equals("creature")){
+					c.play(field.creatures);
+					deck.deck.remove(i);
+				}
+				else if(c.supertype.equals("land")){
+					Land l = (Land) c;
+					field.mana.add(l);
+					deck.deck.remove(i);
+				}
+			}
+			else{
+				System.out.println("Card not found.");
+			}
+		} 
+		catch (ClassNotFoundException | InstantiationException | IllegalAccessException e){
+			System.out.println("Card not found.");
+		}
+		
 	}
 }

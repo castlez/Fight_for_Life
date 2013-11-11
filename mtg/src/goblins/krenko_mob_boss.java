@@ -28,7 +28,7 @@ public class krenko_mob_boss extends Creature {
 	@Override
 	public void play(ArrayList<Card> dest) {
 		dest.add(this);
-
+		
 	}
 
 	@Override
@@ -39,22 +39,28 @@ public class krenko_mob_boss extends Creature {
 	public void end(){
 		power = 3;
 		toughness = 3;
+		if(sick){
+			sick = false;
+		}
 	}
 	
-	public void effect(ArrayList<Creature> dest){
-		int numGob = 0; //number of goblins on the battlefield (including krenko)
-		for(int i = 0 ; i < dest.size() ; i++){
-			if(dest.get(i).type == "goblin"){
-				numGob++;
+	public void effect(ArrayList<Card> dest){
+		if(!sick){
+			int numGob = 0; //number of goblins on the battlefield (including krenko)
+			Creature c;
+			for(int i = 0 ; i < dest.size() ; i++){
+				c = (Creature) (dest.get(i));
+				if(c.type.equals("goblin")){
+					numGob++;
+				}
+			}
+			
+			tapped = true;
+			goblin_token token;
+			for(int i = 0 ; i < numGob ; i++){
+				token = new goblin_token();
+				dest.add(token);
 			}
 		}
-		
-		tapped = true;
-		goblin_token token;
-		for(int i = 0 ; i < numGob ; i++){
-			token = new goblin_token();
-			dest.add(token);
-		}
 	}
-
 }

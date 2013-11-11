@@ -52,10 +52,11 @@ public class Deck {
 			
 			//ignore comments
 			if(next.startsWith("/")){
+				count = 0;
 				continue;
 			}
 			//if it is a number save that number to add the next card
-			else if (isNum(next)){
+			else if (isNum(next.substring(0, 1))){
 				count = Integer.parseInt(next);
 				continue;
 			}	
@@ -98,6 +99,7 @@ public class Deck {
 			adder = (deck.get(i).toString());
 			sb.append(adder);
 		}
+		sb.append("\n");
 		String s = sb.toString();
 		return s;
 	}

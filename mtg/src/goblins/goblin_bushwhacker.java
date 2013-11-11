@@ -38,13 +38,18 @@ public class goblin_bushwhacker extends Creature {
 		//their power by one, removes the old from 
 		//battle field, and replaces with new one.
 		//TODO: will not work if you play multiple bushwhackers in one turn
-		if(dest.get(0).toString().toLowerCase()!="tombstone"){ //kicks as long as it isnt played to the graveyard
+		if(!dest.get(0).toString().equals("")){ //kicks as long as it isn't played to the graveyard
 			for(int i = 0 ; i < dest.size() ; i++){
 				c = (Creature) dest.get(i);
 				c.power++;
+				c.sick=false; //gives them haste
 				dest.remove(i);
 				dest.add(c);
+				
 			}
+		}
+		else{
+			dest.add(this);
 		}
 	}
 
@@ -56,6 +61,9 @@ public class goblin_bushwhacker extends Creature {
 	public void end(){
 		power = 1;
 		toughness = 1;
+		if(sick){
+			sick = false;
+		}
 	}
 
 }

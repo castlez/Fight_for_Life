@@ -5,13 +5,14 @@ import java.util.*;
 public abstract class Creature extends Spell {
 	public int power,toughness;
 	public String type;
-	Boolean tapped;
+	public Boolean tapped, sick; //sick = summoning sickness
 	
 	public Creature(int power, int toughness, int cmc, String supertype, String type){
 		super(cmc, supertype, false);
 		this.power = power;
 		this.toughness = toughness;
 		this.tapped = false;
+		this.sick = true;
 		this.type = type;
 	}
 	

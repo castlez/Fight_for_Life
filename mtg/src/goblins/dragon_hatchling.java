@@ -40,5 +40,8 @@ public class dragon_hatchling extends Creature {
 	public void end(){
 		power = 0;
 		toughness = 1;
+		if(sick){
+			sick = false;
+		}
 	}
 }
